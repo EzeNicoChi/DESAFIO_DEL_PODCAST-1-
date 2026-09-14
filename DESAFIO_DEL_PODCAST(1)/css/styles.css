@@ -1,0 +1,245 @@
+/* =====================================================
+   estilo.css — Sitio "Cuántica e IA"
+   Maquetación clásica fluida: inline-block + porcentajes
+   Cumple: SIN Flexbox, SIN Grid, SIN JavaScript,
+           SIN media queries.
+   ===================================================== */
+
+/* ---------- 1. Paleta de colores (variables CSS) ---------- */
+:root {
+    --azul-noche:   #0d1b2a;   /* cabecera y pie                 */
+    --azul-medio:   #16324a;   /* títulos y barra de menú        */
+    --cian:         #0aa3c2;   /* acentos (hover, bordes)        */
+    --cian-texto:   #0b7a93;   /* enlaces (mejor contraste)      */
+    --cian-suave:   #e1f3f8;   /* fondo de secciones alternas    */
+    --fondo-pagina: #eef3f7;   /* fondo general                  */
+    --blanco:       #ffffff;   /* tarjetas y secciones           */
+    --texto:        #25333f;   /* color base del texto           */
+    --borde:        #d5dee6;   /* líneas y bordes suaves         */
+}
+
+/* ---------- 2. Reset básico ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;   /* el padding no agranda las cajas */
+}
+
+/* ---------- 3. Base tipográfica (sans-serif legible) ---------- */
+html {
+    scroll-behavior: smooth;  /* desplazamiento suave al usar el menú */
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--texto);
+    background-color: var(--fondo-pagina);
+}
+
+h1, h2, h3 {
+    color: var(--azul-medio);
+    line-height: 1.25;
+}
+/* clamp() = tamaño fluido sin media queries */
+h1 { font-size: clamp(1.5rem, 4.5vw, 2.4rem); }
+h2 { font-size: 1.7rem; margin-bottom: 1rem; }
+h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+
+p { margin-bottom: 1rem; }
+
+a { color: var(--cian-texto); }
+a:hover { text-decoration: underline; }
+a:focus  { outline: 3px solid var(--cian); outline-offset: 2px; }
+
+/* ---------- 4. Contenedor fluido (clave del responsive) ---------- */
+.contenedor {
+    width: 90%;               /* se adapta al ancho de pantalla */
+    max-width: 1100px;        /* pero nunca supera 1100px       */
+    margin: 0 auto;           /* centrado horizontal            */
+}
+
+/* ---------- 5. Cabecera ---------- */
+.cabecera {
+    background-color: var(--azul-noche);
+    color: #ffffff;
+    text-align: center;
+    padding: 3rem 1rem;
+}
+.cabecera-etiqueta {
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: #7fd8ea;
+}
+.cabecera h1 { color: #ffffff; margin: 0.6rem 0; }
+.cabecera-subtitulo { color: #b9c6d2; }
+
+/* ---------- 6. Menú de navegación (inline-block, se apila solo) ---------- */
+.menu {
+    background-color: var(--azul-medio);
+    text-align: center;
+}
+.menu ul { list-style: none; }
+.menu li {
+    display: inline-block;    /* ★ técnica clave: sin flex ni grid */
+}
+.menu a {
+    display: block;
+    color: #eaf2f7;
+    text-decoration: none;
+    padding: 0.9rem 1.1rem;
+}
+.menu a:hover,
+.menu a:focus {
+    background-color: var(--cian);
+    color: var(--azul-noche);
+}
+
+/* ---------- 7. Secciones alternadas ---------- */
+.seccion {
+    padding: 2.5rem 0;
+    background-color: var(--blanco);
+}
+.seccion-alterna { background-color: var(--cian-suave); }
+
+.seccion ul, .seccion ol { margin: 0 0 1rem 1.4rem; }
+.seccion li { margin-bottom: 0.4rem; }
+.articulo { margin-bottom: 2rem; }
+
+/* ---------- 8. Citas y destacados ---------- */
+blockquote {
+    border-left: 5px solid var(--cian);
+    background-color: var(--cian-suave);
+    padding: 1rem 1.4rem;
+    font-style: italic;
+    margin: 1.5rem 0;
+}
+blockquote cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.destacado {
+    background-color: var(--azul-noche);
+    color: #dfe9f1;
+    padding: 1.2rem 1.5rem;
+    border-radius: 8px;
+}
+.destacado strong { color: #7fd8ea; }
+
+/* ---------- 9. Tabla (datos económicos) ---------- */
+.tabla-contenedor { overflow-x: auto; }  /* permite desplazar la tabla en móvil */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    margin: 1rem 0;
+}
+caption { font-weight: bold; padding: 0.6rem; }
+th, td {
+    border: 1px solid var(--borde);
+    padding: 0.7rem 0.9rem;
+    text-align: left;
+}
+th { background-color: var(--azul-medio); color: #ffffff; }
+tbody tr:nth-child(even) { background-color: var(--cian-suave); }
+
+/* ---------- 10. Figuras ---------- */
+.figura-centrada { text-align: center; margin: 1.5rem 0; }
+.figura-centrada img {
+    max-width: 100%;       /* imagen fluida: nunca se desborda */
+    height: auto;
+    border-radius: 8px;
+}
+figcaption {
+    font-size: 0.9rem;
+    color: #5a6b78;
+    margin-top: 0.5rem;
+}
+
+/* ---------- 11. GALERÍA RESPONSIVE (la técnica estrella) ----------
+   display: inline-block + width en % + min-width:
+   cuando la pantalla se estrecha y una tarjeta ya no cabe,
+   "cae" sola a la línea siguiente → 3 → 2 → 1 columnas.  */
+.galeria {
+    text-align: center;
+    font-size: 0;           /* anula el espacio en blanco del HTML entre tarjetas */
+}
+.tarjeta {
+    display: inline-block;  /* ★ sin flex ni grid */
+    vertical-align: top;
+    width: 30%;             /* 3 por fila en escritorio */
+    min-width: 230px;       /* ★ hace que se apilen solas en pantallas pequeñas */
+    margin: 1%;
+    font-size: 1rem;        /* restaura el tamaño de texto (heredaba el 0) */
+    background-color: #ffffff;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(13, 27, 42, 0.12);
+}
+.tarjeta img {
+    display: block;         /* elimina el hueco inferior de la línea base */
+    width: 100%;
+    height: auto;
+}
+.tarjeta figcaption { padding: 0.8rem; }
+
+/* ---------- 12. Video ---------- */
+video {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 8px;
+    background-color: #000000;
+}
+/* Contenedor fluido para iframe de YouTube (relación 16:9)
+   sin flex ni JS: técnica del padding-bottom */
+.video-fluido {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-bottom: 56.25%;  /* 9 / 16 = proporción de pantalla */
+    height: 0;
+    overflow: hidden;
+}
+.video-fluido iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* ---------- 13. Glosario de etiquetas ---------- */
+.glosario dt {
+    margin-top: 1rem;
+    font-weight: bold;
+    color: var(--azul-medio);
+}
+.glosario dd { margin-left: 1.2rem; }
+code {
+    font-family: Consolas, 'Courier New', monospace;
+    background-color: var(--cian-suave);
+    color: var(--azul-medio);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+}
+
+/* ---------- 14. Pie de página ---------- */
+.pie {
+    background-color: var(--azul-noche);
+    color: #b9c6d2;
+    text-align: center;
+    padding: 2rem 1rem;
+}
+.pie a { color: #7fd8ea; }
